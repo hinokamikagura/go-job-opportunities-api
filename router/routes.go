@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/hinokamikagura/go-job-opportunities-api/handler"
 )
 
 func InitializeRoutes(router *gin.Engine) {
@@ -12,10 +13,10 @@ func InitializeRoutes(router *gin.Engine) {
 	v1 := router.Group(basePath)
 	{
 		v1.GET("opening", handler.ShowOpeningHandler)
-		v1.POST("opening", handler.ShowOpeningHandler)
-		v1.DELETE("opening", handler.ShowOpeningHandler)
-		v1.PUT("opening", handler.ShowOpeningHandler)
-		v1.GET("openings", handler.ShowOpeningHandler)
+		// v1.POST("opening", handler.ShowOpeningHandler)
+		// v1.DELETE("opening", handler.ShowOpeningHandler)
+		v1.PUT("opening", handler.UpdateOpeningHandler)
+		// v1.GET("openings", handler.ShowOpeningHandler)
 	}
 	// Initialize Swagger
 	// router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
