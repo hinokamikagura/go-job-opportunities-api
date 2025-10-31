@@ -7,6 +7,20 @@ import (
 	"github.com/hinokamikagura/go-job-opportunities-api/schemas"
 )
 
+// @BasePath /api/v1
+
+// @Summary Update opening
+// @Description Update a job opening
+// @Tags Openings
+// @Accept json
+// @Produce json
+// @Param id query string true "Opening Identification"
+// @Param opening body UpdateOpeningRequest true "Opening data to Update"
+// @Success 200 {object} UpdateOpeningResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 404 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /opening [put]
 func UpdateOpeningHandler(ctx *gin.Context) {
 	request := UpdateOpeningRequest{}
 
@@ -20,14 +34,14 @@ func UpdateOpeningHandler(ctx *gin.Context) {
 
 	id := ctx.Query("id")
 
-	if id != "" {
+	if id == "" {
 		sendError(ctx, http.StatusBadRequest, errParamIsRequired("id", "quaryParameter").Error())
 		return
 	}
 
 	opening := schemas.Opening{}
 
-	if err := db.First(&opening, id); err != nil {
+	if err := db.First(&opening, id).Error; err != nil {
 		sendError(ctx, http.StatusNotFound, "opening not found")
 		return
 	}
